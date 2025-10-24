@@ -36,6 +36,7 @@ function head(&$tasks, $dataBase)
             break;
         case "4":
             taskCompleted($tasks);
+            break;
         case "5":
             showTask($tasks);
             break;
