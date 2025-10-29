@@ -5,11 +5,13 @@ class Task{
     private $state;
     private $title;
     private $description;
+     private $date;
 
-    public function __construct($id, $title, $description){
+    public function __construct($id, $title, $description, $date){
         $this-> id=$id;
          $this-> title=$title;
         $this-> description=$description;
+        $this-> date=$date;
         $this-> state=false;
     }
 
@@ -18,12 +20,18 @@ class Task{
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
+            'date' => $this->date,
             'state' => $this->state
         ];
     }
 
     public function toString(){
-        return "\nId: " . $this->id . "\nTítulo: " . $this->title . "\nDescripción: " . $this->description . "\n";
+
+        $state = "Pendiente";
+    if ($this->state) {
+        $state = "Completada";
+    }
+        return "\nId: " . $this->id . "\nTítulo: " . $this->title . "\nDescripción: " . $this->description . "\n" . "Fecha: " . $this->date . "\n" . "Estado: " . $state . "\n";
     }
 
     public static function ifEmpty($tasks) {
@@ -41,7 +49,7 @@ class Task{
             $jsonData = json_decode(file_get_contents($file), true);
             if (is_array($jsonData)) {
                 foreach ($jsonData as $t) {
-                    $tasks[] = new Task($t['id'], $t['title'], $t['description']);
+                    $tasks[] = new Task($t['id'], $t['title'], $t['description'], $t['date']);
                 }
             }
         }
@@ -72,6 +80,9 @@ class Task{
       public function getDescription() {
         return $this->description;
     }
+     public function getDate() {
+        return $this->date;
+    }
 
       public function setId($id) {
         $this->id = $id;
@@ -84,8 +95,11 @@ class Task{
      public function setTitle($title) {
         $this->title = $title;
     }
-     public function setdescription($description) {
+     public function setDescription($description) {
         $this->description = $description;
+    }
+      public function setDate($date) {
+        $this->date = $date;
     }
 
 }
