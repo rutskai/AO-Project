@@ -1,6 +1,7 @@
 <?php
 
 require_once "functions/askTask.php";
+require_once "common/validation.php";
 
 function addTask(&$tasks, $dataBase){
     
@@ -9,12 +10,13 @@ function addTask(&$tasks, $dataBase){
         $id = $data['id'];
         $title = $data['title'];
         $description = $data['description'];
+        $date = $data['date'];
 
         $option= strtolower(readline("Seguro que quieres añadir esta tarea? (s/n): "));
 
         if($option=="s"){
 
-            $task = new Task($id, $title, $description);
+            $task = new Task($id, $title, $description, $date);
             $tasks[] = $task;
 
             # Guardar todas las tareas en JSON
@@ -27,18 +29,19 @@ function addTask(&$tasks, $dataBase){
             echo "Opción no válida.\n";
         }
 
-        do{
-             $newTask=strtolower(readline("\nDesea añadir otra tarea? (s/n): "));
+        
+            $newTask=strtolower(readline("\nDesea añadir otra tarea? (s/n): "));
+            $newTask= validation($newTask);
 
-        }while($newTask !== "s" && $newTask !== "n");
+        
 
         if ($newTask == "n") {
             echo "\nVolviendo al menú...\n";
-            break;
+            return;
         }
 
 
-    } while($newTask==="s");
+    } while($newTask=== "s");
 
  
 }
