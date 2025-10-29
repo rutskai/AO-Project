@@ -1,12 +1,29 @@
 <?php
 
-function showTask($tasks){
+require_once "common/validation.php";
+
+function showTask($tasks)
+{
 
     if (Task::ifEmpty($tasks)) {
         return;
     }
 
+
     do {
+      
+
+        $listAllTasks = strtolower(readline("\n¿Desea listar todas las tareas? (s/n): "));
+        $listAllTasks=validation($listAllTasks);
+
+
+        if ($listAllTasks == "s") {
+            foreach ($tasks as $t) {
+                echo $t->toString();
+                sleep(1);
+            }
+            break;
+        }
 
         $id = readline("Ingrese el id de la tarea que desea listar: ");
 
@@ -23,12 +40,16 @@ function showTask($tasks){
             echo "\nNo se han encontrado las tareas solicitadas.";
         }
 
-        do {
-            $option = strtolower(readline("\nDesea listar otra tarea? (s/n): "));
-        } while ($option !== "s" && $option !== "n");
 
-        if ($option == "n") {
+        $repeatList = strtolower(readline("\n¿Desea listar otras tareas? (s/n): "));
+
+        $repeatList=validation($repeatList);
+
+
+        if ($repeatList == "n") {
             echo "\nVolviendo al menú...\n";
         }
-    } while ($option == "s");
+
+    } while ($repeatList == "s" || $listAllTasks == "s");
+    
 }
