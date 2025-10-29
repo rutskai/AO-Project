@@ -4,10 +4,9 @@ require_once "Task.php";
 require_once "functions/addTask.php";
 require_once "functions/askTask.php";
 require_once "functions/deleteTask.php";
-// require_once "functions/editTask.php";
+require_once "functions/editTask.php";
 require_once "functions/showTask.php";
 require_once "functions/taskCompleted.php";
-
 
 
 $dataBase = 'tasks.json';
@@ -32,7 +31,7 @@ function head(&$tasks, $dataBase)
             deleteTask($tasks, $dataBase);
             break;
         case "3":
-            //editTask();
+            editTask($tasks,$dataBase);
             break;
         case "4":
             taskCompleted($tasks);
