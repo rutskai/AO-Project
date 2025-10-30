@@ -1,50 +1,82 @@
 <?php
 
-function deleteTask(&$tasks, $dataBase){
+require_once "common/validation.php";
+require_once "common/validateID.php";
+
+/**
+ * deleteTask
+ *
+ * Esta función permite eliminar una tarea existente del listado según su ID.
+ * 
+ * - Verifica primero si la lista de tareas está vacía.
+ * - Solicita al usuario un ID y valida su formato numérico.
+ * - Busca la tarea correspondiente y, si la encuentra, la elimina del array.
+ * - Actualiza el archivo JSON con la nueva lista de tareas.
+ * - Si no encuentra la tarea, pregunta al usuario si desea volver a intentar.
+ *
+ * @param array  &$tasks     Referencia al array de tareas existente.
+ * @param string $dataBase  Ruta del archivo JSON donde se guardan las tareas.
+ * @return void
+ */
+
+function deleteTask(&$tasks, $dataBase)
+{
 
      if (Task::ifEmpty($tasks)) {
-        return;
+          return;
      }
 
-     do{
+     $repeatTask = "";
 
-     $deleteOption= readline("\nIngrese el id de la tarea que desea eliminar: ");
-     $isDeleted=false;
+     do {
 
-     foreach ($tasks as $index => $t) {
-
-       if($deleteOption== $t->getId()){
-
-          unset($tasks[$index]);
-          $tasks=array_values( $tasks);
-
-          $isDeleted=true;
+          $id = trim(readline("\nIngrese el ID de la tarea que desea eliminar: "));
+          $errorID = validateID($id);
+          if ($errorID) {
+               echo $errorID . "\n";
+               continue;
           }
-     }
 
-     if($isDeleted){
-          echo "\nSe ha eliminado la tarea correctamente.\n";
+          $isDeleted = false;
+          $titleTask = "";
+          foreach ($tasks as $index => $t) {
 
-          #Base de datos actualizada.
-          file_put_contents($dataBase, json_encode(Task::tasksToArray($tasks), JSON_PRETTY_PRINT));
+               if ($id == $t->getId()) {
 
-     }else if(!$isDeleted){
+                    $titleTask = $t->getTitle();
+                    $sureDelete = validation(readline("\n¿Seguro que deseas eliminar la tarea '" . $titleTask . "' ? (s/n): "));
 
-          do{
-               $option=strtolower(readLine("\nNo se ha encontrado la tarea, volver a introducir id? (s/n): "));
+                    if ($sureDelete == "s") {
 
-               if($option=="n"){
-               echo "\nVolviendo al menú...\n";
-               return;
+                         unset($tasks[$index]);
+                         $tasks = array_values($tasks);
+
+                         $isDeleted = true;
+                         break;
+                    } else {
+                         echo "\nEliminación cancelada.\n";
+                         return;
+                    }
                }
+          }
 
-          }while($option != "s" && $option != "n");
-          
-     }
+          if ($isDeleted) {
 
-}while(!$isDeleted);
+               echo "\nSe ha eliminado la tarea '" . $titleTask . "' correctamente.\n";
 
+               #Base de datos actualizada.
+               file_put_contents($dataBase, json_encode(Task::tasksToArray($tasks), JSON_PRETTY_PRINT));
+               return;
+          } else {
+
+               $repeatTask = trim(strtolower(readLine("\nNo se ha encontrado la tarea, volver a introducir id? (s/n): ")));
+               $repeatTask = validation($repeatTask);
+
+               if ($repeatTask == "n") {
+                    echo "\nVolviendo al menú...\n";
+                    return;
+               }
+          }
+
+     } while ($repeatTask == "s");
 }
-
-
-?>

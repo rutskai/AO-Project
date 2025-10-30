@@ -2,6 +2,19 @@
 
 require_once "common/validation.php";
 
+/**
+ * showTask
+ *
+ * Permite mostrar las tareas de la lista de tareas existentes.
+ *
+ * Pregunta al usuario si desea listar todas las tareas o solo una específica por ID.
+ * Valida las entradas del usuario y muestra la información de las tareas correspondientes.
+ * Permite listar varias tareas de manera consecutiva antes de volver al menú principal.
+ *
+ * @param array $tasks  Lista de tareas existentes.
+ * @return void
+ */
+
 function showTask($tasks)
 {
 
@@ -9,11 +22,9 @@ function showTask($tasks)
         return;
     }
 
-
     do {
       
-
-        $listAllTasks = strtolower(readline("\n¿Desea listar todas las tareas? (s/n): "));
+        $listAllTasks = trim(strtolower(readline("\n¿Desea listar todas las tareas? (s/n): ")));
         $listAllTasks=validation($listAllTasks);
 
 
@@ -25,7 +36,7 @@ function showTask($tasks)
             break;
         }
 
-        $id = readline("Ingrese el id de la tarea que desea listar: ");
+        $id = trim(readline("Ingrese el id de la tarea que desea listar: "));
 
         $found = false;
         foreach ($tasks as $t) {
@@ -37,11 +48,10 @@ function showTask($tasks)
         }
 
         if (!$found) {
-            echo "\nNo se han encontrado las tareas solicitadas.";
+            echo "\nNo se han encontrado las tareas solicitadas.\n";
         }
 
-
-        $repeatList = strtolower(readline("\n¿Desea listar otras tareas? (s/n): "));
+        $repeatList = trim(strtolower(readline("\n¿Desea listar otras tareas? (s/n): ")));
 
         $repeatList=validation($repeatList);
 

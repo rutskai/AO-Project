@@ -1,11 +1,32 @@
 <?php
+
+require_once "common/validateDescription.php";
+require_once "common/validateTitle.php";
+require_once "common/validateDate.php";
+require_once "common/validateID.php";
+
+/**
+ * askTask
+ *
+ * Esta función solicita al usuario los datos de una nueva tarea: ID, título, descripción y fecha.
+ * Valida cada campo utilizando las funciones de validación correspondientes y evita IDs duplicados.
+ * 
+ * El proceso se repite hasta que todos los datos ingresados sean correctos.
+ * 
+ * @param array $tasks  Array de tareas existente, usado para verificar IDs duplicados.
+ * @return array        Retorna un array con los datos validados de la tarea:
+ *                      ['id' => ..., 'title' => ..., 'description' => ..., 'date' => ...]
+ */
+
 function askTask($tasks){
 
     do{
         echo "\nIngrese los datos de la tarea:\n";
         $id=readline("\nId: ");
 
-        if(!is_numeric($id)){ echo "Error, el ID debe ser numérico.\n"; continue; }
+        $errorID=validateID($id);
+        if($errorID){ echo $errorID . "\n"; continue; }
+
         $isDuplicated=false;
 
         foreach($tasks as $t){
@@ -15,23 +36,20 @@ function askTask($tasks){
             }
         }
 
-        if($isDuplicated){ echo "\nId duplicado, por favor, ingrese otro Id."; continue;}
+        if($isDuplicated){ echo "\nID duplicado, por favor, ingrese otro Id.\n"; continue;}
     
         $title=readline("\nTítulo: "); 
+        $errorTitle=validateTitle($title);
+        if($errorTitle){ echo $errorTitle . "\n"; continue; }
+
         $description= readline("\nDescripción: "); 
-
-        if(trim($title)=="" || trim($description)==""){ echo "El texto o/y la descripción no pueden estar vacíos.\n"; continue; }
-        if(is_numeric($title) || is_numeric($description) ){ echo "El título o/y descripción deben ser solo texto. \n"; continue; }
-
+        $errorDescription=validateDescription($description);
+        if($errorDescription){ echo $errorDescription . "\n"; continue; }
+        
         $date= readline("\nFecha (YYYY-MM-DD): "); 
-        if(trim($date)=="" || trim($date)==""){ echo "ELa fecha no puede estar vacía.\n"; continue; }
-
-        $dateObj = DateTime::createFromFormat('Y-m-d', $date);
-
-        if(!$dateObj || $dateObj->format('Y-m-d') !== $date){
-            echo "Fecha inválida. Debe ser YYYY-MM-DD y una fecha real.\n";
-            continue;
-        }
+        $errorDate=validateDate($date);
+        if($errorDate){ echo $errorDate . "\n"; continue; }
+        
 
         break;
 
