@@ -35,7 +35,7 @@ class Task{
     }
 
     public static function ifEmpty($tasks) {
-        if (empty($tasks)) {
+        if (!is_array($tasks) || count($tasks) === 0) {
             echo "\nNo hay tareas disponibles.\n";
             sleep(1);
             return true;  
@@ -100,6 +100,7 @@ class Task{
     }
       public function setDate($date) {
         $this->date = $date;
-    }
+   
+}
 
 }
