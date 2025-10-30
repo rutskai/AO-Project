@@ -8,20 +8,31 @@ require_once "functions/editTask.php";
 require_once "functions/showTask.php";
 require_once "functions/taskCompleted.php";
 
+/**
+ * head
+ *
+ * Función principal que muestra el menú de la aplicación de tareas
+ * y ejecuta la acción correspondiente según la opción seleccionada por el usuario.
+ *
+ * Permite agregar, eliminar, editar, completar y listar tareas,
+ * así como salir de la aplicación. Las tareas se cargan y guardan
+ * desde/hacia un archivo JSON.
+ *
+ * @param array  &$tasks    Referencia al arreglo de tareas cargadas.
+ * @param string $dataBase  Ruta del archivo JSON donde se almacenan las tareas.
+ * @return void
+ */
 
 $dataBase = 'tasks.json';
 $tasks = Task::loadFromJSON($dataBase);
-
-# Se muestra el menú principal de la aplicación, se solicita al usuario un número que hará una función en específico o se 
-# saldrá de la aplicación.
 
 function head(&$tasks, $dataBase)
 {
 
     echo "\nAplicación de Tareas\n";
     echo "--------------------------\n";
-    echo "1) Agregar tareas\n2) Eliminar tarea\n3) Editar tarea\n4) Marcar como completada\n5) Listar tareas\n6) Salir\n";
-    $opciones = readline("\nSelecciona una opción numérica: ");
+    echo "1) Agregar tareas\n2) Eliminar tarea\n3) Editar tarea\n4) Marcar como completada\n5) Listar tareas\n6) Salir\n\n";
+    $opciones = trim(readline("Selecciona una opción numérica: "));
 
     switch ($opciones) {
         case "1":
