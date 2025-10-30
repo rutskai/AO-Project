@@ -14,12 +14,12 @@ require_once "common/validateID.php";
  * Cada campo se valida antes de aplicar los cambios. Los datos actualizados se guardan
  * en el archivo JSON. Permite editar múltiples tareas de forma consecutiva.
  *
- * @param array  &$tasks      Lista de tareas existentes.
+ * @param array  $tasks      Lista de tareas existentes.
  * @param string $dataBase   Ruta del archivo JSON donde se almacenan las tareas.
  * @return void
  */
 
-function editTask(&$tasks, $dataBase)
+function editTask($tasks, $dataBase)
 {
 
     if (Task::ifEmpty($tasks)) {
@@ -31,8 +31,6 @@ function editTask(&$tasks, $dataBase)
         $id = trim(readline("Ingresa el ID de la tarea a editar: "));
         $errorID=validateID($id);
         if($errorID){ echo $errorID . "\n"; continue; }
-
-      
 
         $found = false;
         $taskEdit = "";

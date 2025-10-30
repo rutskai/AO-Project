@@ -12,12 +12,12 @@ require_once "common/validation.php";
  * Solicita y valida los datos de una tarea, confirma con el usuario si desea añadirla, 
  * la agrega al array y guarda en JSON. Permite repetir el proceso hasta que el usuario decida salir.
  *
- * @param array $tasks      Referencia al array de tareas existente.
+ * @param array $tasks      Lista de tareas existentes.
  * @param string $dataBase  Ruta del archivo JSON donde se guardan las tareas.
  * @return void
  */
 
-function addTask(&$tasks, $dataBase){
+function addTask($tasks, $dataBase){
     
     do{
         $data = askTask($tasks);

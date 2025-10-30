@@ -18,7 +18,7 @@ require_once "functions/taskCompleted.php";
  * así como salir de la aplicación. Las tareas se cargan y guardan
  * desde/hacia un archivo JSON.
  *
- * @param array  &$tasks    Referencia al arreglo de tareas cargadas.
+ * @param array  &$tasks    Referencia hacia todas las funciones.
  * @param string $dataBase  Ruta del archivo JSON donde se almacenan las tareas.
  * @return void
  */
