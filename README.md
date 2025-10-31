@@ -52,7 +52,7 @@ Estructura del proyecto
 Funcionalidades
 --------------------------
 
-1) Agregar tareas
+**1) Agregar tareas**
 
 - Solicita ID, título, descripción y fecha de la tarea mediante la función askTask().
 
@@ -70,7 +70,7 @@ Funcionalidades
 
 - Finaliza cuando el usuario responde n, mostrando el mensaje "Volviendo al menú...".
 
-2) Eliminar tarea
+**2) Eliminar tarea**
 
 - Comprueba si la lista de tareas está vacía mediante Task::ifEmpty(). Si no hay tareas registradas, sale de la función.
 
@@ -102,7 +102,7 @@ Funcionalidades
 
 - El proceso se repite mientras el usuario elija la opción s para intentar nuevamente.
 
- 3) Editar tarea
+** 3) Editar tarea**
 
 - Permite modificar título, descripción o fecha de una tarea existente.
 
@@ -110,7 +110,7 @@ Funcionalidades
 
 - Actualiza tasks.json con los cambios.
 
-4) Marcar como completada
+**4) Marcar como completada**
 
 - Comprueba si la lista de tareas está vacía mediante Task::ifEmpty(). Si no hay tareas registradas, la función termina.
 
@@ -153,7 +153,7 @@ Funcionalidades
 
 - Si responde n, muestra "Volviendo al menú..." y regresa al programa principal.
 
-5) Listar tareas
+**5) Listar tareas**
 
 - Verifica si la lista de tareas está vacía mediante Task::ifEmpty().
   Si no existen tareas registradas, la función finaliza.
@@ -188,7 +188,7 @@ Funcionalidades
 
 - Si responde n, muestra "Volviendo al menú..." y regresa al programa principal.
 
-6) Salir
+**6) Salir**
 
 Termina la ejecución del programa de manera segura.
 
