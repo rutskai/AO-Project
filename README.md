@@ -102,7 +102,7 @@ Funcionalidades
 
 - El proceso se repite mientras el usuario elija la opción s para intentar nuevamente.
 
-** 3) Editar tarea**
+**3) Editar tarea**
 
 - Permite modificar título, descripción o fecha de una tarea existente.
 
